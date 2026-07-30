@@ -2,6 +2,7 @@ const themes = {
   creamyru: {
     name: "creamyru",
     emoji: "🤍",
+    icon: "assets/theme-creamyru.png",
     description: "clean, creamy + soft",
     dashboard: "assets/dashboard-creamyru.png",
     giftBox: "assets/gift-box-creamyru.png",
@@ -21,6 +22,7 @@ const themes = {
   pinkyru: {
     name: "pinkyru",
     emoji: "🩷",
+    icon: "assets/theme-pinkyru.png",
     description: "sweet, soft + pretty",
     dashboard: "assets/dashboard-pinkyru.png",
     giftBox: "assets/gift-box-pinkyru.png",
@@ -40,6 +42,7 @@ const themes = {
   purpleyru: {
     name: "purpleyru",
     emoji: "💜",
+    icon: "assets/theme-purpleyru.png",
     description: "dreamy, cozy + a little magical",
     dashboard: "assets/dashboard-purpleyru.png",
     giftBox: "assets/gift-box-purpleyru.png",
@@ -59,6 +62,7 @@ const themes = {
   greenyru: {
     name: "greenyru",
     emoji: "💚",
+    icon: "assets/theme-greenyru.png",
     description: "fresh, calm + grounded",
     dashboard: "assets/dashboard-greenyru.png",
     giftBox: "assets/gift-box-greenyru.png",
@@ -78,6 +82,7 @@ const themes = {
   blueyru: {
     name: "blueyru",
     emoji: "💙",
+    icon: "assets/theme-blueyru.png",
     description: "fresh, bright + easygoing",
     dashboard: "assets/dashboard-blueyru.png",
     giftBox: "assets/gift-box-blueyru.png",
@@ -94,3 +99,4 @@ const themes = {
     notionLink: "https://terrific-cold-ef5.notion.site/my-school-space-blue-3a359953e93880e39b78de19328ad371?source=copy_link"
   }
 };
+
