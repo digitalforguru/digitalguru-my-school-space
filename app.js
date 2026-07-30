@@ -9,6 +9,7 @@ const stepElements = {
   4: document.getElementById("packingStep"),
   5: document.getElementById("finalStep")
 };
+
 const downloadList =
   document.getElementById("downloadList");
 
@@ -123,9 +124,12 @@ function renderThemes() {
 
         </div>
 
-        <span class="theme-emoji">
-          ${theme.emoji || "♡"}
-        </span>
+        <!-- NEW: YOUR CUSTOM THEME ICON -->
+        <img
+          class="theme-icon"
+          src="${theme.icon}"
+          alt=""
+        />
 
       </div>
     `;
@@ -161,9 +165,21 @@ function selectTheme(themeKey) {
     selectedThemeName.textContent = theme.name;
   }
 
+  /*
+    NEW:
+    We are no longer using the emoji as the visual.
+    The selected-theme area will be upgraded in
+    the HTML/CSS next so it can display your icon.
+  */
+
   if (selectedThemeEmoji) {
-    selectedThemeEmoji.textContent =
-      theme.emoji || "♡";
+    selectedThemeEmoji.innerHTML = `
+      <img
+        src="${theme.icon}"
+        alt=""
+        class="selected-theme-icon"
+      />
+    `;
   }
 
   if (giftBox) {
@@ -173,8 +189,9 @@ function selectTheme(themeKey) {
   if (finalGiftBox) {
     finalGiftBox.src = theme.giftBox;
   }
+
   if (addonGiftBox) {
-  addonGiftBox.src = theme.giftBox;
+    addonGiftBox.src = theme.giftBox;
   }
 
   if (openWorkspaceBtn && theme.notionLink) {
@@ -188,6 +205,7 @@ function selectTheme(themeKey) {
 /* =========================================
    THEME COLORS
 ========================================= */
+
 function applyTheme(theme) {
   if (!theme.colors) return;
 
@@ -238,6 +256,9 @@ function updateAddons() {
 }
 
 
+/* =========================================
+   DOWNLOADS
+========================================= */
 
 const downloadLinks = {
   icons:
@@ -297,6 +318,8 @@ function buildDownloadList() {
     downloadList.appendChild(button);
   });
 }
+
+
 /* =========================================
    FINAL RECEIPT
 ========================================= */
@@ -307,8 +330,20 @@ function buildFinalReceipt() {
   const theme = themes[selectedTheme];
 
   if (finalTheme) {
-    finalTheme.textContent =
-      `${theme.emoji || ""} ${theme.name}`;
+    /*
+      NEW:
+      Use the theme icon instead of the iPhone emoji.
+    */
+    finalTheme.innerHTML = `
+      <span class="final-theme-value">
+        <img
+          src="${theme.icon}"
+          alt=""
+          class="final-theme-icon"
+        />
+        ${theme.name}
+      </span>
+    `;
   }
 
   if (finalAddons) {
@@ -337,6 +372,7 @@ function buildFinalReceipt() {
     openWorkspaceBtn.href =
       theme.notionLink || "#";
   }
+
   buildDownloadList();
 }
 
