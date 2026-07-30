@@ -20,6 +20,8 @@ const selectedThemeEmoji = document.getElementById("selectedThemeEmoji");
 
 const giftBox = document.getElementById("giftBox");
 const finalGiftBox = document.getElementById("finalGiftBox");
+const addonGiftBox =
+  document.getElementById("addonGiftBox");
 
 const packingMessage = document.getElementById("packingMessage");
 const packingBar = document.getElementById("packingBar");
@@ -168,6 +170,9 @@ function selectTheme(themeKey) {
 
   if (finalGiftBox) {
     finalGiftBox.src = theme.giftBox;
+  }
+  if (addonGiftBox) {
+  addonGiftBox.src = theme.giftBox;
   }
 
   if (openWorkspaceBtn && theme.notionLink) {
