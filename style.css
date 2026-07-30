@@ -1639,3 +1639,88 @@ a {
   color: var(--text);
   opacity: 0.65;
 }
+
+/* =========================================
+   DIGITALGURU THEME ICONS
+========================================= */
+
+.theme-icon {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+  flex-shrink: 0;
+  display: block;
+  transition:
+    transform 0.22s ease,
+    filter 0.22s ease;
+}
+
+.theme-card:hover .theme-icon {
+  transform: rotate(4deg) scale(1.08);
+}
+
+.theme-card.selected .theme-icon {
+  transform: rotate(-3deg) scale(1.08);
+}
+
+
+/* SELECTED THEME ICON */
+
+.selected-theme-icon {
+  width: 46px;
+  height: 46px;
+  object-fit: contain;
+  display: block;
+  flex-shrink: 0;
+  animation: themeIconPop 0.28s ease;
+}
+
+@keyframes themeIconPop {
+  0% {
+    opacity: 0;
+    transform: scale(0.72) rotate(-8deg);
+  }
+
+  70% {
+    transform: scale(1.08) rotate(3deg);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+
+/* FINAL RECEIPT THEME ICON */
+
+.final-theme-value {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.final-theme-icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 760px) {
+
+  .theme-icon {
+    width: 36px;
+    height: 36px;
+  }
+
+  .selected-theme-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+}
