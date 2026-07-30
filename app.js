@@ -2,53 +2,70 @@ let currentStep = 1;
 let selectedTheme = null;
 let selectedAddons = [];
 
-const steps = document.querySelectorAll(".step");
+const stepElements = {
+  1: document.getElementById("welcomeStep"),
+  2: document.getElementById("themeStep"),
+  3: document.getElementById("addonsStep"),
+  4: document.getElementById("packingStep"),
+  5: document.getElementById("finalStep")
+};
+
 const progressBar = document.getElementById("progressBar");
-const progressText = document.getElementById("progressText");
+const stepLabel = document.getElementById("stepLabel");
+const stepName = document.getElementById("stepName");
 
 const themeGrid = document.getElementById("themeGrid");
-const addonGrid = document.getElementById("addonGrid");
-
 const selectedThemeName = document.getElementById("selectedThemeName");
 const selectedThemeEmoji = document.getElementById("selectedThemeEmoji");
 
 const giftBox = document.getElementById("giftBox");
 const finalGiftBox = document.getElementById("finalGiftBox");
 
-const addonCount = document.getElementById("addonCount");
-const packingText = document.getElementById("packingText");
+const packingMessage = document.getElementById("packingMessage");
 const packingBar = document.getElementById("packingBar");
 const packingPercent = document.getElementById("packingPercent");
 
-const finalThemeName = document.getElementById("finalThemeName");
-const finalAddonList = document.getElementById("finalAddonList");
-const notionLink = document.getElementById("notionLink");
+const finalTheme = document.getElementById("finalTheme");
+const finalAddons = document.getElementById("finalAddons");
+const openWorkspaceBtn =
+  document.getElementById("openWorkspaceBtn");
 
-const totalSteps = 5;
+const stepNames = {
+  1: "welcome",
+  2: "your vibe",
+  3: "your little box",
+  4: "packing",
+  5: "ready"
+};
 
 
 /* =========================================
-   STEP SYSTEM
+   STEP NAVIGATION
 ========================================= */
 
 function showStep(stepNumber) {
   currentStep = stepNumber;
 
-  steps.forEach((step) => {
-    step.classList.toggle(
+  Object.entries(stepElements).forEach(([number, element]) => {
+    element.classList.toggle(
       "active",
-      Number(step.dataset.step) === stepNumber
+      Number(number) === stepNumber
     );
   });
 
-  const progress = (stepNumber / totalSteps) * 100;
+  const progress = ((stepNumber - 1) / 4) * 100;
 
   if (progressBar) {
     progressBar.style.width = `${progress}%`;
   }
 
-  if (progressText) {
-    progressText.textContent = `${stepNumber} / ${totalSteps}`;
+  if (stepLabel) {
+    stepLabel.textContent =
+      `${String(stepNumber).padStart(2, "0")} / 04`;
+  }
+
+  if (stepName) {
+    stepName.textContent = stepNames[stepNumber];
   }
 
   window.scrollTo({
@@ -59,11 +76,14 @@ function showStep(stepNumber) {
 
 
 /* =========================================
-   THEME CARDS
+   THEME LIBRARY
 ========================================= */
 
 function renderThemes() {
-  if (!themeGrid) return;
+  if (!themeGrid || typeof themes === "undefined") {
+    console.error("Themes could not be loaded.");
+    return;
+  }
 
   themeGrid.innerHTML = "";
 
@@ -72,14 +92,13 @@ function renderThemes() {
 
     card.type = "button";
     card.className = "theme-card";
-
     card.dataset.theme = key;
 
     card.innerHTML = `
       <img
         class="theme-preview"
         src="${theme.dashboard}"
-        alt="${theme.name} School Space preview"
+        alt="${theme.name} School Space"
       />
 
       <span class="theme-selected">
@@ -87,19 +106,23 @@ function renderThemes() {
       </span>
 
       <div class="theme-bottom">
+
         <div class="theme-name">
+
           <span class="theme-title">
             ${theme.name}
           </span>
 
           <span class="theme-description">
-            ${theme.description}
+            ${theme.description || ""}
           </span>
+
         </div>
 
         <span class="theme-emoji">
-          ${theme.emoji}
+          ${theme.emoji || "♡"}
         </span>
+
       </div>
     `;
 
@@ -117,11 +140,11 @@ function renderThemes() {
 ========================================= */
 
 function selectTheme(themeKey) {
-  const theme = themes[themeKey];
-
-  if (!theme) return;
+  if (!themes[themeKey]) return;
 
   selectedTheme = themeKey;
+
+  const theme = themes[themeKey];
 
   document.querySelectorAll(".theme-card").forEach((card) => {
     card.classList.toggle(
@@ -130,14 +153,13 @@ function selectTheme(themeKey) {
     );
   });
 
-  applyTheme(theme);
-
   if (selectedThemeName) {
     selectedThemeName.textContent = theme.name;
   }
 
   if (selectedThemeEmoji) {
-    selectedThemeEmoji.textContent = theme.emoji;
+    selectedThemeEmoji.textContent =
+      theme.emoji || "♡";
   }
 
   if (giftBox) {
@@ -147,35 +169,51 @@ function selectTheme(themeKey) {
   if (finalGiftBox) {
     finalGiftBox.src = theme.giftBox;
   }
+
+  if (openWorkspaceBtn && theme.notionLink) {
+    openWorkspaceBtn.href = theme.notionLink;
+  }
+
+  applyTheme(theme);
 }
 
 
 /* =========================================
-   APPLY THEME COLORS
+   THEME COLORS
 ========================================= */
 
 function applyTheme(theme) {
+  if (!theme.colors) return;
+
   const root = document.documentElement;
 
-  root.style.setProperty(
-    "--accent",
-    theme.colors.accent
-  );
+  if (theme.colors.accent) {
+    root.style.setProperty(
+      "--accent",
+      theme.colors.accent
+    );
+  }
 
-  root.style.setProperty(
-    "--accent-light",
-    theme.colors.accentLight
-  );
+  if (theme.colors.accentLight) {
+    root.style.setProperty(
+      "--accent-light",
+      theme.colors.accentLight
+    );
+  }
 
-  root.style.setProperty(
-    "--border",
-    theme.colors.border
-  );
+  if (theme.colors.border) {
+    root.style.setProperty(
+      "--border",
+      theme.colors.border
+    );
+  }
 
-  root.style.setProperty(
-    "--text",
-    theme.colors.text
-  );
+  if (theme.colors.text) {
+    root.style.setProperty(
+      "--text",
+      theme.colors.text
+    );
+  }
 }
 
 
@@ -183,149 +221,54 @@ function applyTheme(theme) {
    ADD-ONS
 ========================================= */
 
-const addons = [
-  {
-    id: "motivation",
-    title: "motivation image pack",
-    kicker: "free extra",
-    description:
-      "20 aesthetic school motivation images for your dashboards, wallpapers + inspo boards.",
-    file:
-      "my school space motivation"
-  },
-
-  {
-    id: "icons",
-    title: "digitalguru icon pack",
-    kicker: "free extra",
-    description:
-      "a cute collection of icons to decorate your School Space and make it yours.",
-    file:
-      "my school space iconpack"
-  },
-
-  {
-    id: "banners",
-    title: "school banner pack",
-    kicker: "free extra",
-    description:
-      "20 matching banners for course pages, dashboards, notes + more.",
-    file:
-      "my school space banners"
-  }
-];
-
-
-function renderAddons() {
-  if (!addonGrid) return;
-
-  addonGrid.innerHTML = "";
-
-  addons.forEach((addon) => {
-    const label = document.createElement("label");
-
-    label.className = "addon-card";
-
-    label.innerHTML = `
-      <input
-        type="checkbox"
-        value="${addon.id}"
-      />
-
-      <span class="addon-check">
-        ✓
-      </span>
-
-      <span class="addon-content">
-
-        <span class="addon-kicker">
-          ${addon.kicker}
-        </span>
-
-        <h3>
-          ${addon.title}
-        </h3>
-
-        <p>
-          ${addon.description}
-        </p>
-
-        <span class="addon-file">
-          ${addon.file}
-        </span>
-
-      </span>
-    `;
-
-    const checkbox = label.querySelector("input");
-
-    checkbox.addEventListener("change", updateAddons);
-
-    addonGrid.appendChild(label);
-  });
-}
-
-
 function updateAddons() {
   selectedAddons = Array.from(
     document.querySelectorAll(
-      '#addonGrid input[type="checkbox"]:checked'
+      '#addonsStep input[name="addon"]:checked'
     )
   ).map((input) => input.value);
-
-  if (addonCount) {
-    addonCount.textContent =
-      `${selectedAddons.length} selected`;
-  }
 }
 
 
 /* =========================================
-   FINAL SUMMARY
+   FINAL RECEIPT
 ========================================= */
 
-function buildFinalSummary() {
-  if (!selectedTheme) return;
+function buildFinalReceipt() {
+  if (!selectedTheme || !themes[selectedTheme]) return;
 
   const theme = themes[selectedTheme];
 
-  if (finalThemeName) {
-    finalThemeName.textContent =
-      `${theme.emoji} ${theme.name}`;
+  if (finalTheme) {
+    finalTheme.textContent =
+      `${theme.emoji || ""} ${theme.name}`;
+  }
+
+  if (finalAddons) {
+    if (selectedAddons.length === 0) {
+      finalAddons.textContent = "none";
+    } else {
+      const addonNames = {
+        icons: "icon collection",
+        banners: "banner collection",
+        motivation: "motivation pack",
+        surprise: "surprise freebie"
+      };
+
+      finalAddons.textContent =
+        selectedAddons
+          .map((addon) => addonNames[addon] || addon)
+          .join(" + ");
+    }
   }
 
   if (finalGiftBox) {
     finalGiftBox.src = theme.giftBox;
   }
 
-  if (notionLink) {
-    notionLink.href = theme.notionLink;
-  }
-
-  if (finalAddonList) {
-    finalAddonList.innerHTML = "";
-
-    if (selectedAddons.length === 0) {
-      finalAddonList.innerHTML = `
-        <span>no extras selected</span>
-      `;
-      return;
-    }
-
-    selectedAddons.forEach((addonId) => {
-      const addon = addons.find(
-        (item) => item.id === addonId
-      );
-
-      if (!addon) return;
-
-      const item = document.createElement("span");
-
-      item.textContent =
-        `♡ ${addon.title}`;
-
-      finalAddonList.appendChild(item);
-    });
+  if (openWorkspaceBtn) {
+    openWorkspaceBtn.href =
+      theme.notionLink || "#";
   }
 }
 
@@ -339,6 +282,15 @@ function startPacking() {
 
   let progress = 0;
 
+  const messages = [
+    "picking your theme...",
+    "folding your dashboard...",
+    "adding your goodies...",
+    "wrapping everything up...",
+    "adding a tiny DigitalGuru sparkle...",
+    "your School Space is ready ♡"
+  ];
+
   if (packingBar) {
     packingBar.style.width = "0%";
   }
@@ -347,19 +299,8 @@ function startPacking() {
     packingPercent.textContent = "0%";
   }
 
-  const messages = [
-    "choosing your theme...",
-    "folding your dashboard...",
-    "adding your cute extras...",
-    "wrapping everything up...",
-    "adding a tiny DigitalGuru sparkle...",
-    "your School Space is ready ♡"
-  ];
-
-  let messageIndex = 0;
-
-  if (packingText) {
-    packingText.textContent = messages[0];
+  if (packingMessage) {
+    packingMessage.textContent = messages[0];
   }
 
   const interval = setInterval(() => {
@@ -373,25 +314,21 @@ function startPacking() {
       packingPercent.textContent = `${progress}%`;
     }
 
-    const newMessageIndex = Math.min(
+    const messageIndex = Math.min(
       Math.floor(progress / 20),
       messages.length - 1
     );
 
-    if (newMessageIndex !== messageIndex) {
-      messageIndex = newMessageIndex;
-
-      if (packingText) {
-        packingText.textContent =
-          messages[messageIndex];
-      }
+    if (packingMessage) {
+      packingMessage.textContent =
+        messages[messageIndex];
     }
 
     if (progress >= 100) {
       clearInterval(interval);
 
       setTimeout(() => {
-        buildFinalSummary();
+        buildFinalReceipt();
         showStep(5);
       }, 650);
     }
@@ -400,95 +337,136 @@ function startPacking() {
 
 
 /* =========================================
-   BUTTON EVENTS
+   WELCOME → THEME
 ========================================= */
 
-document.querySelectorAll("[data-next]").forEach((button) => {
-  button.addEventListener("click", () => {
-    const nextStep = Number(button.dataset.next);
+const startBtn =
+  document.getElementById("startBtn");
 
-    if (nextStep === 2) {
-      showStep(2);
-      return;
-    }
-
-    if (nextStep === 3) {
-      if (!selectedTheme) {
-        alert("pick your vibe first ♡");
-        return;
-      }
-
-      showStep(3);
-      return;
-    }
-
-    if (nextStep === 4) {
-      startPacking();
-      return;
-    }
-
-    if (nextStep === 5) {
-      buildFinalSummary();
-      showStep(5);
-    }
-  });
-});
-
-
-document.querySelectorAll("[data-back]").forEach((button) => {
-  button.addEventListener("click", () => {
-    const previousStep = Number(button.dataset.back);
-
-    showStep(previousStep);
-  });
-});
-
-
-/* =========================================
-   START OVER
-========================================= */
-
-const restartButton =
-  document.getElementById("restartButton");
-
-if (restartButton) {
-  restartButton.addEventListener("click", () => {
-    selectedTheme = null;
-    selectedAddons = [];
-
-    document.querySelectorAll(
-      ".theme-card"
-    ).forEach((card) => {
-      card.classList.remove("selected");
-    });
-
-    document.querySelectorAll(
-      '#addonGrid input[type="checkbox"]'
-    ).forEach((checkbox) => {
-      checkbox.checked = false;
-    });
-
-    updateAddons();
-
-    showStep(1);
-
-    if (giftBox) {
-      giftBox.src =
-        "assets/gift-box-pinkyru.png";
-    }
-
-    if (finalGiftBox) {
-      finalGiftBox.src =
-        "assets/gift-box-pinkyru.png";
-    }
+if (startBtn) {
+  startBtn.addEventListener("click", () => {
+    showStep(2);
   });
 }
 
 
 /* =========================================
-   INITIALIZE
+   THEME BUTTONS
+========================================= */
+
+const backToWelcome =
+  document.getElementById("backToWelcome");
+
+if (backToWelcome) {
+  backToWelcome.addEventListener("click", () => {
+    showStep(1);
+  });
+}
+
+
+const continueThemeBtn =
+  document.getElementById("continueThemeBtn");
+
+if (continueThemeBtn) {
+  continueThemeBtn.addEventListener("click", () => {
+    if (!selectedTheme) return;
+
+    showStep(3);
+  });
+}
+
+
+/* =========================================
+   THEME SELECTION ENABLES CONTINUE
+========================================= */
+
+const originalSelectTheme = selectTheme;
+
+selectTheme = function(themeKey) {
+  originalSelectTheme(themeKey);
+
+  if (continueThemeBtn) {
+    continueThemeBtn.disabled = false;
+  }
+};
+
+
+/* =========================================
+   ADD-ON CHECKBOXES
+========================================= */
+
+document
+  .querySelectorAll('#addonsStep input[name="addon"]')
+  .forEach((checkbox) => {
+    checkbox.addEventListener("change", updateAddons);
+  });
+
+
+/* =========================================
+   BACK TO THEMES
+========================================= */
+
+const backToThemes =
+  document.getElementById("backToThemes");
+
+if (backToThemes) {
+  backToThemes.addEventListener("click", () => {
+    showStep(2);
+  });
+}
+
+
+/* =========================================
+   PACK MY BOX
+========================================= */
+
+const buildBtn =
+  document.getElementById("buildBtn");
+
+if (buildBtn) {
+  buildBtn.addEventListener("click", () => {
+    updateAddons();
+    startPacking();
+  });
+}
+
+
+/* =========================================
+   RESTART
+========================================= */
+
+const restartBtn =
+  document.getElementById("restartBtn");
+
+if (restartBtn) {
+  restartBtn.addEventListener("click", () => {
+    selectedTheme = null;
+    selectedAddons = [];
+
+    document
+      .querySelectorAll('#addonsStep input[name="addon"]')
+      .forEach((checkbox) => {
+        checkbox.checked = false;
+      });
+
+    if (continueThemeBtn) {
+      continueThemeBtn.disabled = true;
+    }
+
+    document
+      .querySelectorAll(".theme-card")
+      .forEach((card) => {
+        card.classList.remove("selected");
+      });
+
+    showStep(1);
+  });
+}
+
+
+/* =========================================
+   START
 ========================================= */
 
 renderThemes();
-renderAddons();
 showStep(1);
