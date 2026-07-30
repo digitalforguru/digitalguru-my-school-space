@@ -15,7 +15,7 @@ const themes = {
       glow: "#eee1d7"
     },
 
-    notionLink: "#"
+    notionLink: "https://terrific-cold-ef5.notion.site/my-school-space-39559953e9388071b1cfd4d39c243537?source=copy_link"
   },
 
   pinkyru: {
@@ -34,7 +34,7 @@ const themes = {
       glow: "#ffd6e8"
     },
 
-    notionLink: "#"
+    notionLink: "https://terrific-cold-ef5.notion.site/my-school-space-pink-3a059953e93880df8160db8d6fc29984?source=copy_link"
   },
 
   purpleyru: {
@@ -53,7 +53,7 @@ const themes = {
       glow: "#e7dcff"
     },
 
-    notionLink: "#"
+    notionLink: "https://terrific-cold-ef5.notion.site/my-school-space-purple-3a459953e93880699ec4fd527a5d704d?source=copy_link"
   },
 
   greenyru: {
@@ -72,7 +72,7 @@ const themes = {
       glow: "#dcefe2"
     },
 
-    notionLink: "#"
+    notionLink: "https://terrific-cold-ef5.notion.site/my-school-space-green-3a459953e93880088b96fe53c8993345?source=copy_link"
   },
 
   blueyru: {
@@ -91,6 +91,6 @@ const themes = {
       glow: "#dcebf8"
     },
 
-    notionLink: "#"
+    notionLink: "https://terrific-cold-ef5.notion.site/my-school-space-blue-3a359953e93880e39b78de19328ad371?source=copy_link"
   }
 };
