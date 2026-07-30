@@ -9,6 +9,8 @@ const stepElements = {
   4: document.getElementById("packingStep"),
   5: document.getElementById("finalStep")
 };
+const downloadList =
+  document.getElementById("downloadList");
 
 const progressBar = document.getElementById("progressBar");
 const stepLabel = document.getElementById("stepLabel");
@@ -236,6 +238,65 @@ function updateAddons() {
 }
 
 
+
+const downloadLinks = {
+  icons:
+    "https://github.com/digitalforguru/digitalguru-my-school-space/releases/download/v1.0.0/my.school.space.iconpack.zip",
+
+  banners:
+    "https://github.com/digitalforguru/digitalguru-my-school-space/releases/download/v1.0.0/my.school.space.banners.zip",
+
+  motivation:
+    "https://github.com/digitalforguru/digitalguru-my-school-space/releases/download/v1.0.0/my.school.space.motivation.zip"
+};
+
+const downloadNames = {
+  icons: "icon collection",
+  banners: "banner collection",
+  motivation: "motivation pack"
+};
+
+function buildDownloadList() {
+  if (!downloadList) return;
+
+  downloadList.innerHTML = "";
+
+  if (selectedAddons.length === 0) {
+    downloadList.innerHTML = `
+      <p class="no-downloads">
+        no extras this time ♡
+      </p>
+    `;
+
+    return;
+  }
+
+  selectedAddons.forEach((addon) => {
+    const link = downloadLinks[addon];
+
+    if (!link) return;
+
+    const button = document.createElement("a");
+
+    button.className = "download-card";
+    button.href = link;
+    button.download = "";
+    button.target = "_blank";
+    button.rel = "noopener noreferrer";
+
+    button.innerHTML = `
+      <span>
+        ♡ ${downloadNames[addon]}
+      </span>
+
+      <strong>
+        download ↓
+      </strong>
+    `;
+
+    downloadList.appendChild(button);
+  });
+}
 /* =========================================
    FINAL RECEIPT
 ========================================= */
@@ -276,6 +337,7 @@ function buildFinalReceipt() {
     openWorkspaceBtn.href =
       theme.notionLink || "#";
   }
+  buildDownloadList();
 }
 
 
