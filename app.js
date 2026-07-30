@@ -181,39 +181,40 @@ function selectTheme(themeKey) {
 /* =========================================
    THEME COLORS
 ========================================= */
-
 function applyTheme(theme) {
   if (!theme.colors) return;
 
   const root = document.documentElement;
 
-  if (theme.colors.accent) {
-    root.style.setProperty(
-      "--accent",
-      theme.colors.accent
-    );
-  }
+  root.style.setProperty(
+    "--accent",
+    theme.colors.accent
+  );
 
-  if (theme.colors.accentLight) {
-    root.style.setProperty(
-      "--accent-light",
-      theme.colors.accentLight
-    );
-  }
+  root.style.setProperty(
+    "--accent-light",
+    theme.colors.accentLight
+  );
 
-  if (theme.colors.border) {
-    root.style.setProperty(
-      "--border",
-      theme.colors.border
-    );
-  }
+  root.style.setProperty(
+    "--border",
+    theme.colors.border
+  );
 
-  if (theme.colors.text) {
-    root.style.setProperty(
-      "--text",
-      theme.colors.text
-    );
-  }
+  root.style.setProperty(
+    "--text",
+    theme.colors.text
+  );
+
+  root.style.setProperty(
+    "--page-background",
+    theme.colors.background
+  );
+
+  root.style.setProperty(
+    "--page-glow",
+    theme.colors.glow
+  );
 }
 
 
