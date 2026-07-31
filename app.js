@@ -328,6 +328,15 @@ function buildFinalReceipt() {
   if (!selectedTheme || !themes[selectedTheme]) return;
 
   const theme = themes[selectedTheme];
+  const finalSubtitle =
+  document.getElementById("finalSubtitle");
+
+if (finalSubtitle) {
+  finalSubtitle.innerHTML = `
+    your <strong>${theme.name}</strong> space
+    is packed and ready for the semester. ♡
+  `;
+}
 
   if (finalTheme) {
     /*
