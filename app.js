@@ -386,14 +386,27 @@ function startPacking() {
 
   let progress = 0;
 
+  const theme = selectedTheme && themes[selectedTheme]
+    ? themes[selectedTheme]
+    : null;
+
+  const themeName = theme ? theme.name : "your";
+
   const messages = [
-    "picking your theme...",
+    `picking your ${themeName} theme...`,
     "folding your dashboard...",
-    "adding your goodies...",
-    "wrapping everything up...",
+    "adding your little goodies...",
+    `wrapping your ${themeName} box...`,
     "adding a tiny DigitalGuru sparkle...",
-    "your School Space is ready ♡"
+    `your ${themeName} school space is here ♡`
   ];
+
+  const giftStage = document.querySelector(".gift-stage");
+
+  /* reset animation state */
+  if (giftStage) {
+    giftStage.classList.remove("delivery-complete");
+  }
 
   if (packingBar) {
     packingBar.style.width = "0%";
@@ -428,17 +441,28 @@ function startPacking() {
         messages[messageIndex];
     }
 
+    /* ✦ FINAL DELIVERY MOMENT ✦ */
+
     if (progress >= 100) {
       clearInterval(interval);
+
+      if (giftStage) {
+        giftStage.classList.add("delivery-complete");
+      }
+
+      if (packingMessage) {
+        packingMessage.textContent =
+          `your ${themeName} school space is here ♡`;
+      }
 
       setTimeout(() => {
         buildFinalReceipt();
         showStep(5);
-      }, 650);
+      }, 1500);
     }
+
   }, 55);
 }
-
 
 /* =========================================
    WELCOME → THEME
