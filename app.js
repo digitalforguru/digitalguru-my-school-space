@@ -277,6 +277,11 @@ const downloadNames = {
   motivation: "motivation pack"
 };
 
+const secretFreebie = {
+  code: "STUDYSUNNYRU",
+  name: "DigitalGuru Daily Weather Widget"
+};
+
 function buildDownloadList() {
   if (!downloadList) return;
 
@@ -293,6 +298,51 @@ function buildDownloadList() {
   }
 
   selectedAddons.forEach((addon) => {
+
+    /* SECRET WEATHER WIDGET */
+    if (addon === "surprise") {
+      const card = document.createElement("div");
+
+      card.className = "download-card secret-freebie-card";
+
+      card.innerHTML = `
+        <div class="secret-freebie-content">
+
+          <span class="secret-freebie-kicker">
+            ✦ a little gift for you
+          </span>
+
+          <strong>
+            ${secretFreebie.name}
+          </strong>
+
+          <p>
+            you unlocked a free DigitalGuru
+            Daily Weather Widget.
+          </p>
+
+          <div class="claim-code">
+            <span>your access code</span>
+            <strong>${secretFreebie.code}</strong>
+          </div>
+
+          <a
+            class="secret-claim-btn"
+            href="https://digitalforguru.github.io/digitalguru-notion-widget-claim-hub/#accessBox"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            claim my widget →
+          </a>
+
+        </div>
+      `;
+
+      downloadList.appendChild(card);
+
+      return;
+    }
+
     const link = downloadLinks[addon];
 
     if (!link) return;
@@ -318,7 +368,6 @@ function buildDownloadList() {
     downloadList.appendChild(button);
   });
 }
-
 
 /* =========================================
    FINAL RECEIPT
