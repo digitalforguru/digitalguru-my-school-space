@@ -1876,11 +1876,13 @@ a {
 .gift-stage.delivery-complete .gift-box {
   animation:
     giftReveal 0.8s cubic-bezier(.2,1.5,.4,1) forwards;
-  filter:
-    drop-shadow(0 0 18px var(--page-glow))
-    drop-shadow(0 28px 38px rgba(0,0,0,0.14));
-}
 
+  filter:
+    drop-shadow(0 0 12px var(--page-glow))
+    drop-shadow(0 20px 30px rgba(0, 0, 0, 0.12));
+
+  will-change: transform, filter;
+}
 
 .gift-stage.delivery-complete .sparkle {
   opacity: 1;
