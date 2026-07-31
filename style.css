@@ -2069,3 +2069,7 @@ a {
     transform: translateY(0);
   }
 }
+.final-subtitle strong {
+  color: var(--accent);
+  font-weight: 850;
+}
