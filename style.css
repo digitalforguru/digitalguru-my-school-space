@@ -2016,3 +2016,56 @@ a {
   }
 
 }
+/* FINAL ARRIVAL ANIMATION */
+
+.final-card {
+  animation: finalArrival 0.7s cubic-bezier(.2, 1.2, .35, 1) both;
+}
+
+.final-gift {
+  animation: finalGiftArrive 0.8s cubic-bezier(.2, 1.3, .35, 1) 0.12s both;
+}
+
+.workspace-receipt {
+  animation: finalReceiptArrive 0.65s ease 0.25s both;
+}
+
+.come-back-card {
+  animation: finalReceiptArrive 0.65s ease 0.4s both;
+}
+
+@keyframes finalArrival {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes finalGiftArrive {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.82) rotate(-4deg);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1) rotate(0);
+  }
+}
+
+@keyframes finalReceiptArrive {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
