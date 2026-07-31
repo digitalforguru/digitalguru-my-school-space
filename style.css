@@ -2073,3 +2073,73 @@ a {
   color: var(--accent);
   font-weight: 850;
 }
+.secret-freebie-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.secret-freebie-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.secret-freebie-kicker {
+  color: var(--accent);
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: lowercase;
+}
+
+.secret-freebie-content > strong {
+  font-size: 1.05rem;
+}
+
+.secret-freebie-content p {
+  margin: 0;
+  opacity: 0.72;
+  line-height: 1.5;
+}
+
+.claim-code {
+  margin-top: 8px;
+  padding: 12px 14px;
+  border: 1px dashed var(--accent);
+  border-radius: 14px;
+  background: var(--accent-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.claim-code span {
+  font-size: 0.72rem;
+  opacity: 0.65;
+}
+
+.claim-code strong {
+  color: var(--accent);
+  letter-spacing: 0.06em;
+}
+
+.secret-claim-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 5px;
+  padding: 11px 15px;
+  border-radius: 12px;
+  background: var(--accent);
+  color: white;
+  text-decoration: none;
+  font-weight: 750;
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.secret-claim-btn:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
